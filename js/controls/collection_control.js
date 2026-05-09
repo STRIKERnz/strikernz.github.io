@@ -64,7 +64,7 @@ export var CollectionControl = L.Control.extend({
 
         L.DomEvent.disableClickPropagation(container);
 
-        L.DomEvent.on(this._map, 'click', this._addPosition, this);
+        this._map.on('click', this._addPosition, this);
 
         var context = this;
         $("#code-output").on('input propertychange paste', () => context._loadFromText());
