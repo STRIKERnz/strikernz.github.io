@@ -12,7 +12,7 @@
     </script>
     <meta charset="utf-8" />
 
-    <title>Explv's Map</title>
+    <title>RuneLite Tile Markers</title>
 
     <link rel="apple-touch-icon" sizes="57x57" href="/favicon/apple-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="60x60" href="/favicon/apple-icon-60x60.png">
@@ -88,34 +88,29 @@
         <div class="slide-panel" id="settings-panel">
             <form class="form-horizontal">
                 <div class="form-group">
-                    <label class="control-label col-lg-6" for="output-type">Output type</label>
+                    <label class="control-label col-lg-6" for="tool-type">Tool type</label>
                     <div class="col-lg-5">
-                        <select class="form-control" id="output-type">
-                            <option>Array</option>
-                            <option>List</option>
-                            <option>Arrays.asList</option>
-                            <option>Raw</option>
+                        <select class="form-control" id="tool-type" disabled>
+                            <option>RuneLite Tile Markers</option>
                         </select>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-lg-6" for="bot-api">Bot type</label>
+                    <label class="control-label col-lg-6" for="tile-marker-color">Tile marker color</label>
                     <div class="col-lg-5">
-                        <select class="form-control" id="bot-api">
-                            <option>OSBot</option>
-                            <option>TRiBot</option>
-                            <option>DreamBot</option>
-                            <option>RSPeer</option>
-                            <option>QuantumBot</option>
-                            <option>RuneMate</option>
-                            <option>RuneLite</option>
-                        </select>
+                        <input id="tile-marker-color" class="form-control" type="color" value="#ffff00">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-lg-6" for="dax-spacing">Dax Path spacing</label>
+                    <label class="control-label col-lg-6" for="tile-marker-label">Tile marker label</label>
                     <div class="col-lg-5">
-                        <input id="dax-spacing" class="form-control" type="number" min="0" value="0">
+                        <input id="tile-marker-label" class="form-control" type="text" value="" maxlength="40">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-lg-6" for="auto-jump-on-import">Auto jump on import</label>
+                    <div class="col-lg-5">
+                        <input id="auto-jump-on-import" type="checkbox" checked>
                     </div>
                 </div>
             </form>
