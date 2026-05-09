@@ -15,7 +15,7 @@ class Locations {
         }
         
         $.ajax({
-            url: "resources/map_labels.json",
+            url: "public/resources/map_labels.json",
             dataType: "json",
             context: this,
             success: function( data ) {
