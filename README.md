@@ -1,12 +1,36 @@
-# Explv.github.io
+# RuneLite Tile Markers
 
-### Dax Path
+A lightweight visual editor for RuneLite Ground Markers tile-marker JSON.
 
-The Dax Path tool makes use of @itsdax great web walking API https://github.com/itsdax/Runescape-Web-Walker-Engine
-All credits to him.
+Forked from Explv's original map project: https://github.com/Explv/Explv.github.io
 
-### Generating map tiles
+## Features
 
-1. See instructions in https://github.com/Explv/osrs_map_tiles#generating-tiles
+- Import existing RuneLite tile markers by pasting JSON.
+- Add/remove markers visually on the OSRS map.
+- Export back to RuneLite-compatible JSON.
+- Jump/focus to imported markers.
+- Optional auto-jump after import.
+- Per-marker color and label support.
 
-2. Test the map to ensure coordinates produced for a selection of OSRS tiles are correct, you can compare with the live version of https://explv.github.io/
+## Local Development
+
+```bash
+npm install
+npm run dev
+```
+
+## Production Build
+
+```bash
+npm run build
+```
+
+Build output is written to `dist/`.
+
+## GitHub Pages
+
+- If your repository is `STRIKERnz.github.io`, set `base: '/'` in `vite.config.js`.
+- If your repository is `Tilemarkers`, set `base: '/Tilemarkers/'` in `vite.config.js`.
+
+Then push to `master` and deploy via GitHub Pages (GitHub Actions workflow is included in `.github/workflows/deploy.yml`).
