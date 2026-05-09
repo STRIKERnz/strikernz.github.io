@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  base: './',
+  base: '/Tilemarkers/',
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
