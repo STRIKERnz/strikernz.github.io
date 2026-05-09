@@ -44,7 +44,7 @@ export var CollectionControl = L.Control.extend({
             }
         });
 
-        this._createControl('<img src="public/css/images/marker-icon-red.png" alt="Tile Markers" title="RuneLite Tile Markers" height="25" width="20">', container, function(e) {
+        this._createControl('<img src="css/images/marker-icon-red.png" onerror="this.onerror=null;this.src=\'public/css/images/marker-icon-red.png\';" alt="Tile Markers" title="RuneLite Tile Markers" height="25" width="20">', container, function(e) {
             this._toggleCollectionMode(this._tileMarkers, e.target);
         });
 
