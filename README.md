@@ -27,10 +27,3 @@ npm run build
 ```
 
 Build output is written to `dist/`.
-
-## GitHub Pages
-
-- If your repository is `STRIKERnz.github.io`, set `base: '/'` in `vite.config.js`.
-- If your repository is `Tilemarkers`, set `base: '/Tilemarkers/'` in `vite.config.js`.
-
-Then push to `master` and deploy via GitHub Pages (GitHub Actions workflow is included in `.github/workflows/deploy.yml`).
