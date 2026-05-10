@@ -42,11 +42,11 @@ export class Position {
         return Math.sqrt((diffX * diffX) + (diffY * diffY));
     }
 
-    toLeaflet(map) {
+    toLeaflet(map, options) {
         var startLatLng = this.toLatLng(map)
         var endLatLng = new Position(this.x + 1, this.y + 1, this.z).toLatLng(map)
 
-        return L.rectangle(L.latLngBounds(startLatLng, endLatLng), {
+        return L.rectangle(L.latLngBounds(startLatLng, endLatLng), options || {
             color: "#33b5e5",
             fillColor: "#33b5e5",
             fillOpacity: 1.0,

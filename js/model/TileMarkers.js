@@ -10,27 +10,59 @@ export class TileMarkers extends Path {
     }
 
     add(position, color, label) {
+        if (this.contains(position)) {
+            return false;
+        }
+
         this.positions.push(position);
-        var rectangle = position.toLeaflet(this.map);
-        rectangle.setStyle(this._styleFromARGB(color));
+        var rectangle = position.toLeaflet(this.map, this._styleFromARGB(color));
         this.featureGroup.addLayer(rectangle);
         this.rectangles.push(rectangle);
         this.markers.push({
             color: color || '#FFFFFFFF',
             label: label || ''
         });
+
+        return true;
     }
 
     removeLast() {
-        if (this.positions.length > 0) this.featureGroup.removeLayer(this.positions.pop());
+        if (this.positions.length > 0) this.positions.pop();
         if (this.rectangles.length > 0) this.featureGroup.removeLayer(this.rectangles.pop());
         if (this.markers.length > 0) this.markers.pop();
     }
 
+    remove(position) {
+        var index = this.indexOf(position);
+        if (index === -1) {
+            return false;
+        }
+
+        this.featureGroup.removeLayer(this.rectangles[index]);
+        this.positions.splice(index, 1);
+        this.rectangles.splice(index, 1);
+        this.markers.splice(index, 1);
+        return true;
+    }
+
     removeAll() {
-        while (this.positions.length > 0) this.featureGroup.removeLayer(this.positions.pop());
+        while (this.positions.length > 0) this.positions.pop();
         while (this.rectangles.length > 0) this.featureGroup.removeLayer(this.rectangles.pop());
         this.markers = [];
+    }
+
+    contains(position) {
+        return this.indexOf(position) !== -1;
+    }
+
+    indexOf(position) {
+        for (var i = 0; i < this.positions.length; i++) {
+            if (this.positions[i].equals(position)) {
+                return i;
+            }
+        }
+
+        return -1;
     }
 
     _styleFromARGB(argb) {
@@ -44,7 +76,9 @@ export class TileMarkers extends Path {
                 color: rgb,
                 fillColor: rgb,
                 fillOpacity: alpha,
-                opacity: 1
+                opacity: 1,
+                bubblingMouseEvents: false,
+                interactive: true
             };
         }
 
@@ -52,7 +86,9 @@ export class TileMarkers extends Path {
             color: '#FFFFFF',
             fillColor: '#FFFFFF',
             fillOpacity: 1,
-            opacity: 1
+            opacity: 1,
+            bubblingMouseEvents: false,
+            interactive: true
         };
     }
 }

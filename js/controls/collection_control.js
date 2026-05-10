@@ -84,8 +84,15 @@ export var CollectionControl = L.Control.extend({
         }
 
         var position = Position.fromLatLng(this._map, e.latlng, this._map.plane);
-        this._currentDrawable.add(position, this._selectedTileMarkerColor(), this._selectedTileMarkerLabel());
-        this._outputCode();
+        if (this._currentDrawable.contains(position)) {
+            this._currentDrawable.remove(position);
+            this._outputCode();
+            return;
+        }
+
+        if (this._currentDrawable.add(position, this._selectedTileMarkerColor(), this._selectedTileMarkerLabel())) {
+            this._outputCode();
+        }
     },
 
     _toggleCollectionMode: function(drawable, element) {
