@@ -2,7 +2,7 @@
 
 A lightweight visual editor for RuneLite Ground Markers tile-marker JSON.
 
-Forked from Explv's original map project: https://github.com/Explv/Explv.github.io
+Forked from Explv's map project: https://github.com/Explv/Explv.github.io
 
 ## Features
 
