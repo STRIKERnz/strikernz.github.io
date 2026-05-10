@@ -8,7 +8,7 @@ export var TitleLabel = L.Control.extend({
     onAdd: function (map) {
         var container = L.DomUtil.create('div');
         container.id = 'titleLabel';
-        container.innerHTML = 'RuneLite Tile Markers';
+        container.innerHTML = 'Visual RuneLite Tile Marker Tool';
 
         L.DomEvent.disableClickPropagation(container);
         return container;
