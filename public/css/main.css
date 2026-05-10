@@ -192,6 +192,15 @@ input.leaflet-control-custom {
     max-height: 210px;
 }
 
+#code-output-panel {
+    top: auto;
+    bottom: 16px;
+    right: 16px;
+    width: 300px;
+    height: 160px;
+    max-height: 160px;
+}
+
 #settings-panel {
     justify-content: center;
     align-items: center;
@@ -207,6 +216,10 @@ input.leaflet-control-custom {
     overflow-y:auto;
     max-height: 210px;
     color: white;
+}
+
+#code-output-panel #code-output-pre {
+    max-height: 160px;
 }
 
 #map-container {
@@ -236,6 +249,79 @@ input.leaflet-control-custom {
     border-radius: 0 0 0 0;
     border-bottom: 1px solid #ccc !important;
     background-color: #fff;
+}
+
+.tile-marker-toolbar {
+    background: none !important;
+    width: 70px !important;
+    position: relative;
+}
+
+.tile-marker-toolbar .leaflet-control-custom {
+    border-bottom: 1px solid #ccc !important;
+}
+
+.tile-marker-toolbar > a.leaflet-control-custom {
+    width: 70px !important;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tile-marker-toolbar > a.leaflet-control-custom img {
+    max-width: 20px;
+    max-height: 25px;
+}
+
+.tile-marker-editor {
+    position: absolute;
+    top: 96px;
+    right: 76px;
+    display: none;
+    width: 180px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+    align-items: center;
+    padding: 6px;
+    background-color: #121212 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.tile-marker-toolbar:not(.tile-marker-toolbar-active) .tile-marker-editor {
+    display: none;
+}
+
+.tile-marker-toolbar-active .tile-marker-editor {
+    display: flex;
+}
+
+.tile-marker-editor-color {
+    width: 36px;
+    height: 26px;
+    padding: 1px;
+    border: 1px solid #555;
+    background: #222;
+    cursor: pointer;
+}
+
+.tile-marker-editor-label {
+    min-width: 0;
+    flex: 1;
+    height: 26px;
+    padding: 4px 7px;
+    border: 1px solid #555;
+    border-radius: 2px;
+    background: #1f1f1f;
+    color: #fff;
+}
+
+.tile-marker-editor-label::placeholder {
+    color: #9a9a9a;
 }
 
 .leaflet-control-custom:last-child {

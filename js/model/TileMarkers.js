@@ -77,8 +77,8 @@ export class TileMarkers extends Path {
                 fillColor: rgb,
                 fillOpacity: alpha,
                 opacity: 1,
-                bubblingMouseEvents: false,
-                interactive: true
+                weight: 1,
+                interactive: false
             };
         }
 
@@ -87,8 +87,8 @@ export class TileMarkers extends Path {
             fillColor: '#FFFFFF',
             fillOpacity: 1,
             opacity: 1,
-            bubblingMouseEvents: false,
-            interactive: true
+            weight: 1,
+            interactive: false
         };
     }
 }

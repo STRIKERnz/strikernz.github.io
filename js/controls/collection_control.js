@@ -6,6 +6,7 @@ import {TileMarkers} from '../model/TileMarkers.js';
 import {RuneLiteTileMarkersConverter} from '../bot_api_converters/runelite/runelite_tile_markers_converter.js';
 
 const converter = new RuneLiteTileMarkersConverter();
+const DEFAULT_TILE_MARKER_COLOR = '#FFFF00';
 
 export var CollectionControl = L.Control.extend({
     options: {
@@ -13,15 +14,15 @@ export var CollectionControl = L.Control.extend({
     },
 
     onAdd: function (map) {
-        this._tileMarkers = new TileMarkers(this._map);
+        this._tileMarkers = new TileMarkers(map);
 
         this._currentDrawable = undefined;
         this._editing = false;
 
         var container = L.DomUtil.create('div', 'leaflet-bar leaflet-control noselect');
-        container.style.background = 'none';
-        container.style.width = '70px';
+        container.classList.add('tile-marker-toolbar');
         container.style.height = 'auto';
+        this._toolbarContainer = container;
 
         this._createControl('<i class="fa fa-copy"></i>', container, function() {
             this._copyCodeToClipboard();
@@ -48,6 +49,8 @@ export var CollectionControl = L.Control.extend({
             this._toggleCollectionMode(this._tileMarkers, e.target);
         });
 
+        this._createMarkerEditor(container);
+
         this._createControl('<i class="fa fa-undo" aria-hidden="true"></i>', container, function() {
             if (this._currentDrawable !== undefined) {
                 this._currentDrawable.removeLast();
@@ -64,7 +67,7 @@ export var CollectionControl = L.Control.extend({
 
         L.DomEvent.disableClickPropagation(container);
 
-        this._map.on('click', this._addPosition, this);
+        map.on('click', this._addPosition, this);
 
         var context = this;
         $("#code-output").on('input propertychange paste', () => context._loadFromText());
@@ -76,6 +79,24 @@ export var CollectionControl = L.Control.extend({
         var control = L.DomUtil.create('a', 'leaflet-bar leaflet-control leaflet-control-custom', container);
         control.innerHTML = html;
         L.DomEvent.on(control, 'click', onClick, this);
+    },
+
+    _createMarkerEditor: function(container) {
+        var editor = L.DomUtil.create('div', 'tile-marker-editor', container);
+
+        this._tileMarkerColorInput = L.DomUtil.create('input', 'tile-marker-editor-color', editor);
+        this._tileMarkerColorInput.type = 'color';
+        this._tileMarkerColorInput.value = DEFAULT_TILE_MARKER_COLOR;
+        this._tileMarkerColorInput.title = 'Tile marker color';
+
+        this._tileMarkerLabelInput = L.DomUtil.create('input', 'tile-marker-editor-label', editor);
+        this._tileMarkerLabelInput.type = 'text';
+        this._tileMarkerLabelInput.value = '';
+        this._tileMarkerLabelInput.maxLength = 40;
+        this._tileMarkerLabelInput.placeholder = 'Label';
+        this._tileMarkerLabelInput.title = 'Tile marker label';
+
+        L.DomEvent.disableClickPropagation(editor);
     },
 
     _addPosition: function(e) {
@@ -100,6 +121,8 @@ export var CollectionControl = L.Control.extend({
 
         if (this._currentDrawable === drawable || drawable === undefined) {
             this._editing = false;
+            this._toolbarContainer.classList.remove('tile-marker-toolbar-active');
+            this._restoreDoubleClickZoom();
 
             $("#code-output-panel").hide("slide", {direction: "right"}, 300);
 
@@ -118,6 +141,8 @@ export var CollectionControl = L.Control.extend({
         }
 
         this._editing = true;
+        this._toolbarContainer.classList.add('tile-marker-toolbar-active');
+        this._disableDoubleClickZoom();
         $(element).closest("a.leaflet-control-custom").addClass("active");
 
         $("#code-output-panel").show("slide", {direction: "right"}, 300);
@@ -133,6 +158,24 @@ export var CollectionControl = L.Control.extend({
         }
 
         this._outputCode();
+    },
+
+    _disableDoubleClickZoom: function() {
+        if (this._map.doubleClickZoom === undefined || !this._map.doubleClickZoom.enabled()) {
+            this._restoreDoubleClickZoomOnExit = false;
+            return;
+        }
+
+        this._restoreDoubleClickZoomOnExit = true;
+        this._map.doubleClickZoom.disable();
+    },
+
+    _restoreDoubleClickZoom: function() {
+        if (this._restoreDoubleClickZoomOnExit && this._map.doubleClickZoom !== undefined) {
+            this._map.doubleClickZoom.enable();
+        }
+
+        this._restoreDoubleClickZoomOnExit = false;
     },
 
     _outputCode: function() {
@@ -199,7 +242,7 @@ export var CollectionControl = L.Control.extend({
     },
 
     _selectedTileMarkerColor: function() {
-        var rgb = $("#tile-marker-color").val();
+        var rgb = this._tileMarkerColorInput !== undefined ? this._tileMarkerColorInput.value : $("#tile-marker-color").val();
         if (typeof rgb !== 'string' || !/^#[0-9A-Fa-f]{6}$/.test(rgb)) {
             return '#FFFFFFFF';
         }
@@ -208,7 +251,7 @@ export var CollectionControl = L.Control.extend({
     },
 
     _selectedTileMarkerLabel: function() {
-        var label = $("#tile-marker-label").val();
+        var label = this._tileMarkerLabelInput !== undefined ? this._tileMarkerLabelInput.value : $("#tile-marker-label").val();
         return typeof label === 'string' ? label : '';
     }
 });
