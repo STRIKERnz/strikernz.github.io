@@ -26,11 +26,11 @@ export var CollectionControl = L.Control.extend({
 
         this._createControl('<i class="fa fa-copy"></i>', container, function() {
             this._copyCodeToClipboard();
-        });
+        }, 'Copy tile marker JSON');
 
         this._createControl('<i class="fa fa-crosshairs" aria-hidden="true"></i>', container, function() {
             this._focusCurrentDrawable();
-        });
+        }, 'Jump to placed tile markers');
 
         this._createControl('<i class="fa fa-cog"></i>', container, function() {
             if ($("#settings-panel").is(":visible")) {
@@ -43,11 +43,11 @@ export var CollectionControl = L.Control.extend({
                 $("#settings-panel").css('display', 'flex').hide();
                 $("#settings-panel").show("slide", {direction: "right"}, 300);
             }
-        });
+        }, 'Settings');
 
         this._createControl('<img src="css/images/marker-icon-red.png" onerror="this.onerror=null;this.src=\'public/css/images/marker-icon-red.png\';" alt="Tile Markers" title="RuneLite Tile Markers" height="25" width="20">', container, function(e) {
             this._toggleCollectionMode(this._tileMarkers, e.target);
-        });
+        }, 'RuneLite Tile Markers');
 
         this._createMarkerEditor(container);
 
@@ -56,14 +56,14 @@ export var CollectionControl = L.Control.extend({
                 this._currentDrawable.removeLast();
                 this._outputCode();
             }
-        });
+        }, 'Remove last tile marker');
 
         this._createControl('<i class="fa fa-trash" aria-hidden="true"></i>', container, function() {
             if (this._currentDrawable !== undefined) {
                 this._currentDrawable.removeAll();
                 this._outputCode();
             }
-        });
+        }, 'Clear all tile markers');
 
         L.DomEvent.disableClickPropagation(container);
 
@@ -75,9 +75,13 @@ export var CollectionControl = L.Control.extend({
         return container;
     },
 
-    _createControl: function(html, container, onClick) {
+    _createControl: function(html, container, onClick, title) {
         var control = L.DomUtil.create('a', 'leaflet-bar leaflet-control leaflet-control-custom', container);
         control.innerHTML = html;
+        if (title) {
+            control.title = title;
+            control.setAttribute('aria-label', title);
+        }
         L.DomEvent.on(control, 'click', onClick, this);
     },
 
